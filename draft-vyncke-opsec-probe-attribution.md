@@ -5,16 +5,16 @@ category: info
 
 docname: draft-vyncke-opsec-probe-attribution-latest
 ipr: trust200902
-area: AREA
-workgroup: WG Working Group
+area: "Operations and Management"
+workgroup: "Operational Security Capabilities for IP Network Infrastructure"
 keyword: Internet-Draft
 venue:
-  group: OPSEC WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: evyncke/opsec-probe-attribution
-  latest: https://example.com/LATEST
+  group: "Operational Security Capabilities for IP Network Infrastructure"
+  type: "Working Group"
+  mail: "opsec@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/opsec/"
+  github: "evyncke/opsec-probe-attribution"
+  latest: "https://evyncke.github.io/opsec-probe-attribution/draft-vyncke-opsec-probe-attribution.html"
 
 stand_alone: yes
 smart_quotes: no
