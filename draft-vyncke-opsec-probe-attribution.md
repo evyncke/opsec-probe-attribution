@@ -19,21 +19,21 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Attribution of Internet Probes"
+abbrev: "Probes Attribution"
 category: info
 
-docname: draft-todo-yourname-protocol-latest
+docname: draft-vyncke-opsec-probe-attribution-00
 ipr: trust200902
 area: AREA
 workgroup: WG Working Group
 keyword: Internet-Draft
 venue:
-  group: WG
+  group: OPSEC WG
   type: Working Group
   mail: WG@example.com
   arch: https://example.com/WG
-  github: USER/REPO
+  github: evyncke/opsec-probe-attribution
   latest: https://example.com/LATEST
 
 stand_alone: yes
@@ -42,9 +42,9 @@ pi: [toc, sortrefs, symrefs]
 
 author:
  -
-    name: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+    name: Ëric Vyncke
+    organization: Cisco
+    email: evyncke@cisco.com
 
 normative:
 
