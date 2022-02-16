@@ -44,14 +44,14 @@ informative:
 
 --- abstract
 
-When doing some Internet-wide measurements, it is often necessary to send active probes to either collaborating parties or non collaborating parties; the latter is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more important who to contact.
+When doing some Internet-wide measurements, it is often necessary to send active probes to either collaborating parties or non-collaborating parties; the latter is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more important who to contact.
 
 
 --- middle
 
 # Introduction
 
-When doing some Internet-wide measurements, it is frequently necessary to send active probes to either collaborating parties or non collaborating parties.
+When doing some Internet-wide measurements, it is frequently necessary to send active probes to either collaborating parties or non-collaborating parties.
 
 Sending unsolicited probes should be done at a rate low enough to avoid causing a denial of services. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
 
@@ -87,7 +87,7 @@ Similarly as in {{!I-D.draft-foudil-securitytxt}}, when a node probes other node
 
 - preferred-languages.
 
-Plus another one "description" which is a URI pointing a document describing the measurement.
+Plus, another one "description" which is a URI pointing a document describing the measurement.
 
 # In-band Probe Attribution
 
@@ -103,15 +103,15 @@ When the desired measurement allows for it, one "probe description URI" should b
 
 - for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in the PadN option;
 
-- etc
+- etc.
 
 The URI should start at the first octet of the payload and should be terminated by an octet of 0x0, i.e., it must be null terminated.
 
-Note: using the above technique produces a valid and legit packet for all the nodes forwarding and receiving the probe. The node receiving the probe may or may not process the received packet but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes.
+Note: using the above technique produces a valid and legit packet for all the nodes forwarding and receiving the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes.
 
 # Out-of-band Probe Attribution
 
-When it is not possible to include the "probe description URI" in the probe, then a specific URI based on the source address of thr probe must be constructed based on {{!RFC8615}}, e.g., for a probe source address of 2001:db8::dead, the following URI are constructed:
+When it is not possible to include the "probe description URI" in the probe, then a specific URI must be constructed based on the source address of the probe packet following {{!RFC8615}}, e.g., for a probe source address of 2001:db8::dead, the following URI are constructed:
 
 - if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the URI is "https://example.net/.well-known/probing.txt" ;
 
@@ -121,7 +121,7 @@ The constructed URI must be a reference to the "Probe description Text" (see {{t
 
 # Security Considerations
 
-While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing accross the Internet.
+While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
 
 As both proposed techniques rely on the IP source address, they are vulnerable to IP spoofing.
 
