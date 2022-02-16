@@ -4,6 +4,7 @@
 *.swp
 *.txt
 *.upload
+*.docx
 *~
 .refcache
 .tags
