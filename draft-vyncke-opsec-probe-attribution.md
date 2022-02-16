@@ -23,13 +23,19 @@ pi: [toc, sortrefs, symrefs]
 author:
  -
     ins: E. Vyncke
-    name: Ëric Vyncke
+    name: Éric Vyncke
     organization: Cisco
     street: De Kleetlaan 64
     code: 1831
     city: Diegem
     country: Belgium
     email: evyncke@cisco.com
+ -
+    ins: B. Donnet
+    name: Benoît Donnet
+    organization: Université de Liège
+    country: Belgium
+    email: benoit.donnet@uliege.be
  -
     ins: J. Iurman
     name: Justin Iurman
@@ -40,20 +46,68 @@ author:
 normative:
 
 informative:
+  LARGE_SCALE:
+    title: Efficient Algorithms for Large-Scale Topology Discovery
+    target: https://dl.acm.org/doi/pdf/10.1145/1071690.1064256
+    date: 2005
+    seriesinfo:
+      DOI: 10.1145/1071690.1064256
+    author:
+      -
+        name: Benoît Donnet
+        org: Université Pierre & Marie Curie Laboratoire LiP6–CNRS
+      -
+        name: Philippe Raoult
+        org: Université Pierre & Marie Curie Laboratoire LiP6–CNRS
+      -
+        name: Timur Friedman
+        org: Université Pierre & Marie Curie Laboratoire LiP6–CNRS
+      -
+        name: Mark Crovella
+        org: Boston University Computer Science Department
+  IPV6_TOPOLOGY:
+    title: In the IP of the Beholder Strategies for Active IPv6 Topology Discovery
+    target: http://www.cmand.org/papers/beholder-imc18.pdf
+    date: 2018
+    seriesinfo:
+      DOI: 10.1145/3278532.3278559
+    author:
+      -
+        name: Robert Beverly
+        org: Naval Postgraduate School
+      -
+        name: Ramakrishnan Durairajan
+        org: University of Oregon
+      -
+        name: David Plonka
+        org: Akamai Technologies
+      -
+        name: Justin P. Rohrer
+        org: Naval Postgraduate School
+  IPV4_TOPOLOGY:
+    title: Yarrp’ing the Internet Randomized High-Speed Active Topology Discovery
+    target: http://www.cmand.org/papers/yarrp-imc16.pdf
+    date: 2016
+    seriesinfo:
+      DOI: 10.1145/2987443.2987479
+    author:
+      -
+        name: Robert Beverly
+        org: Naval Postgraduate School
 
 
 --- abstract
 
-When doing some Internet-wide measurements, it is often necessary to send active probes to either collaborating parties or non-collaborating parties; the latter is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more important who to contact.
+Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. This is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more important who to contact.
 
 
 --- middle
 
 # Introduction
 
-When doing some Internet-wide measurements, it is frequently necessary to send active probes to either collaborating parties or non-collaborating parties.
+Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Such measurements includes {{LARGE_SCALE}} and {{?RFC7872}}.
 
-Sending unsolicited probes should be done at a rate low enough to avoid causing a denial of services. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
+Sending unsolicited probes should obviously be done at a rate low enough to avoid wasting other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
 
 This document suggests a couple of simple techniques allowing any party or organization to understand:
 
@@ -71,15 +125,15 @@ Note: it is expected that only good-willing researchers will use these technique
 
 This document defines a "probe description URI" as an URI pointing to:
 
+- "Probe Description", see {{text}}, e.g., "https://example.net/measurement.txt";
+
 - an email address, e.g., "mailto:eric@example.net";
 
-- a web page, e.g., "https://example.net/probe containing a "Probe Description", see {{text}}.
+- a phone number to call, e.g., "tel:++1-201-555-0123".
 
 ## Probe Description Text {#text}
 
 Similarly as in {{!I-D.draft-foudil-securitytxt}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 3 of {{!I-D.draft-foudil-securitytxt}} and should have the following fields:
-
-- digital signature;
 
 - contact;
 
@@ -119,6 +173,14 @@ When it is not possible to include the "probe description URI" in the probe, the
 
 The constructed URI must be a reference to the "Probe description Text" (see {{text}}).
 
+# Ethical Considerations
+
+Executing some measurement experiences over the global Internet obviously require some ethical considerations when transit/destination non-solicited parties are involved.
+
+This document proposes a common way to identity the source and the purpose of active probing in order to reduce the potential burden on the non-solicited parties.
+
+But there are other considerations to be taken into account: from the payload content (e.g., is the encoding valid ?) to the transmission rate (see also {{IPV6_TOPOLOGY}} and {{IPV4_TOPOLOGY}} for some probing speed impacts). Those considerations are out of scope of this document.
+
 # Security Considerations
 
 While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
@@ -132,7 +194,7 @@ The "Well-Known URIs" registry should be updated with the following:
 
 - additional values (using the template from {{!RFC8615}}):
 
-- URI suffix: security.txt
+- URI suffix: probing.txt
 
 - Change controller: IETF
 
@@ -147,4 +209,4 @@ The "Well-Known URIs" registry should be updated with the following:
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to thank Benoît Donnet, Alain Fiocco, Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
+The authors would like to thank Alain Fiocco, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
