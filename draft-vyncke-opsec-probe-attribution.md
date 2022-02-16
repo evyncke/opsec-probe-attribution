@@ -115,7 +115,7 @@ When it is not possible to include the "probe description URI" in the probe, the
 
 - if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the URI is "https://example.net/.well-known/probing.txt" ;
 
-- else (or in addition), the URI is "https://[2001:db8::dead]/.well-known/probing.txt". Of course, there will be a certificate verification issue.
+- else (or in addition), the URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". Of course, there will be a certificate verification issue.
 
 The constructed URI must be a reference to the "Probe description Text" (see {{text}}).
 
@@ -147,4 +147,4 @@ The "Well-Known URIs" registry should be updated with the following:
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to thank Benoît Donnet, Alain Fiocco, Mark Townsley for helpful discussion as well as Raphaël Léas for an early implementation.
+The authors would like to thank Benoît Donnet, Alain Fiocco, Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
