@@ -115,7 +115,7 @@ This document suggests a couple of simple techniques allowing any party or organ
 
 - what is its purpose,
 
-- and more significant who to contact for further information or stop the probing.
+- and more significantly who to contact for further information or stop the probing.
 
 Note: it is expected that only good-willing researchers will use these techniques.
 
@@ -155,7 +155,7 @@ When the desired measurement allows for it, one "probe description URI" should b
 
 - for a {{!RFC793}} TCP packet with the SYN flag: data is allowed in TCP packets with the SYN flag per section 3.4 of {{!RFC793}} (2nd paragraph);
 
-- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in the PadN option;
+- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in the PadN option. Note that, per the informational {{?RFC4942}} section 2.1.9.5, it is suggested that PadN option should only contain 0x0 and be smaller than 8 octets, so the proposed insertion of the URI in PadN option could have influence on the measurement itself;
 
 - etc.
 
