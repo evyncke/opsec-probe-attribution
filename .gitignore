@@ -15,3 +15,4 @@ draft-vyncke-opsec-probe-attribution.xml
 lib
 report.xml
 venv/
+.vscode/
