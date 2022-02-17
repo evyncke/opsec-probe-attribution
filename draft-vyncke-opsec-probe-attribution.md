@@ -123,17 +123,17 @@ Note: it is expected that only good-willing researchers will use these technique
 
 ## Probe Description URI {#uri}
 
-This document defines a "probe description URI" as an URI pointing to:
+This document defines a "probe description URI" as a URI pointing to:
 
 - "Probe Description", see {{text}}, e.g., "https://example.net/measurement.txt";
 
 - an email address, e.g., "mailto:eric@example.net";
 
-- a phone number to call, e.g., "tel:++1-201-555-0123".
+- a phone number to call, e.g., "tel:+1-201-555-0123".
 
 ## Probe Description Text {#text}
 
-Similarly as in {{!I-D.draft-foudil-securitytxt}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 3 of {{!I-D.draft-foudil-securitytxt}} and should have the following fields:
+Similarly, as in {{!I-D.draft-foudil-securitytxt}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 3 of {{!I-D.draft-foudil-securitytxt}} and should have the following fields:
 
 - contact;
 
