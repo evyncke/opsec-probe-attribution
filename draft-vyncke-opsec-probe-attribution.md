@@ -147,7 +147,7 @@ Plus, another one "description" which is a URI pointing a document describing th
 
 When the desired measurement allows for it, one "probe description URI" should be included in the payload of all probes sent. This could be:
 
-- for a {{!RFC4443}} ICMPv6 echo request: in the optional data (see section 4.1 of {{!RFC443}});
+- for a {{!RFC4443}} ICMPv6 echo request: in the optional data (see section 4.1 of {{!RFC4443}});
 
 - for a {{!RFC792}} ICMPv4 echo request: in the optional data;
 
