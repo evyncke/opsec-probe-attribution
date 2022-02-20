@@ -143,6 +143,16 @@ Similarly, as in {{!I-D.draft-foudil-securitytxt}}, when a node probes other nod
 
 Plus, another one "description" which is a URI pointing a document describing the measurement.
 
+# Out-of-band Probe Attribution
+
+When it is not possible to include the "probe description URI" in the probe packet itself, then a specific URI must be constructed based on the source address of the probe packet following {{!RFC8615}}, e.g., for a probe source address of 2001:db8::dead, the following URI are constructed:
+
+- if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the URI is "https://example.net/.well-known/probing.txt" ;
+
+- else (or in addition), the URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". Of course, there will be a certificate verification issue.
+
+The constructed URI must be a reference to the "Probe description Text" (see {{text}}).
+
 # In-band Probe Attribution
 
 When the desired measurement allows for it, one "probe description URI" should be included in the payload of all probes sent. This could be:
@@ -159,19 +169,10 @@ When the desired measurement allows for it, one "probe description URI" should b
 
 - etc.
 
-The URI should start at the first octet of the payload and should be terminated by an octet of 0x0, i.e., it must be null terminated.
+The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded also by an octet of 0x00.
 
-Note: using the above technique produces a valid and legit packet for all the nodes forwarding and receiving the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes.
+Note: using the above technique produces a valid and legit packet for all the nodes forwarding and receiving the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes. As the insertion of the URI in the packet may not respect the syntax of the protocol, responses may not be received (such a TCP SYN+ACK) and perhaps an ICMP should be expected or more probably absence of reply.
 
-# Out-of-band Probe Attribution
-
-When it is not possible to include the "probe description URI" in the probe, then a specific URI must be constructed based on the source address of the probe packet following {{!RFC8615}}, e.g., for a probe source address of 2001:db8::dead, the following URI are constructed:
-
-- if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the URI is "https://example.net/.well-known/probing.txt" ;
-
-- else (or in addition), the URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". Of course, there will be a certificate verification issue.
-
-The constructed URI must be a reference to the "Probe description Text" (see {{text}}).
 
 # Ethical Considerations
 
@@ -209,4 +210,4 @@ The "Well-Known URIs" registry should be updated with the following:
 # Acknowledgments
 {:numbered="false"}
 
-The authors would like to thank Alain Fiocco, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
+The authors would like to thank Alain Fiocco, Fernando Gont, Ted Hardie, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
