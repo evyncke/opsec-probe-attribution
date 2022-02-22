@@ -171,8 +171,7 @@ When the desired measurement allows for it, one "probe description URI" should b
 
 The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded also by an octet of 0x00.
 
-Note: using the above technique produces a valid and legit packet for all the nodes forwarding and receiving the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes. As the insertion of the URI in the packet may not respect the syntax of the protocol, responses may not be received (such a TCP SYN+ACK) and perhaps an ICMP should be expected or more probably absence of reply.
-
+Note: using the above technique produces a valid and legit packet for all the nodes forwarding the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes. As the insertion of the URI in the packet may not respect the syntax of the protocol, responses may not be received (such a TCP SYN+ACK) and perhaps an ICMP should be expected or more probably an absence of reply.
 
 # Ethical Considerations
 
@@ -186,8 +185,7 @@ But there are other considerations to be taken into account: from the payload co
 
 While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
 
-As both proposed techniques rely on the IP source address, they are vulnerable to IP spoofing.
-
+This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  As a result, a malevolent actor could provide false information while conducting the probes, so that the action was attributed to a third party.  The recipient of this information cannot, as a result, rely on this information without confirmation.  If a recipient cannot confirm the information or does not wish to do so, they should treat the flows as if there were no attribution.
 
 # IANA Considerations
 
