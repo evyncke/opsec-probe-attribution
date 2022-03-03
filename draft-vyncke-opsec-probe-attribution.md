@@ -123,9 +123,9 @@ Note: it is expected that only good-willing researchers will use these technique
 
 ## Probe Description URI {#uri}
 
-This document defines a "probe description URI" as a URI pointing to:
+This document defines a "probe description URI" (see {{text}}) as a URI pointing to:
 
-- "Probe Description", see {{text}}, e.g., "https://example.net/measurement.txt";
+- a "Probe Description", see {{text}}, e.g., "https://example.net/measurement.txt";
 
 - an email address, e.g., "mailto:eric@example.net";
 
