@@ -3,7 +3,7 @@ title: "Attribution of Internet Probes"
 abbrev: "Probes Attribution"
 category: info
 submissiontype: IETF
-docname: draft-vyncke-opsec-probe-attribution-latest
+docname: draft-ietf-opsec-probe-attribution-latest
 ipr: trust200902
 area: "Operations and Management"
 workgroup: "Operational Security Capabilities for IP Network Infrastructure"
@@ -14,7 +14,7 @@ venue:
   mail: "opsec@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/opsec/"
   github: "evyncke/opsec-probe-attribution"
-  latest: "https://evyncke.github.io/opsec-probe-attribution/draft-vyncke-opsec-probe-attribution.html"
+  latest: "https://evyncke.github.io/opsec-probe-attribution/draft-ietf-opsec-probe-attribution.html"
 
 stand_alone: yes
 smart_quotes: no
