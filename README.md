@@ -2,10 +2,10 @@
 
 This is the working area for the individual Internet-Draft, "Attribution of Internet Probes".
 
-* [Editor's Copy](https://evyncke.github.io/opsec-probe-attribution/#go.draft-vyncke-opsec-probe-attribution.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-vyncke-opsec-probe-attribution)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-vyncke-opsec-probe-attribution)
-* [Compare Editor's Copy to Individual Draft](https://evyncke.github.io/opsec-probe-attribution/#go.draft-vyncke-opsec-probe-attribution.diff)
+* [Editor's Copy](https://evyncke.github.io/opsec-probe-attribution/#go.draft-ietf-opsec-probe-attribution.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-opsec-probe-attribution)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-ietf-opsec-probe-attribution)
+* [Compare Editor's Copy to Individual Draft](https://evyncke.github.io/opsec-probe-attribution/#go.draft-ietf-opsec-probe-attribution.diff)
 
 
 ## Contributing
