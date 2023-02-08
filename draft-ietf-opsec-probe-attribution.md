@@ -98,7 +98,7 @@ informative:
 
 --- abstract
 
-Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. This is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.
+Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Sometimes these measurements are viewed as unwelcome or aggressive. This document proposes some simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.
 
 
 --- middle
@@ -107,7 +107,7 @@ Active measurements at Internet-scale can target either collaborating parties or
 
 Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Such measurements include {{LARGE_SCALE}} and {{?RFC7872}}.
 
-Sending unsolicited probes should obviously be done at a rate low enough to avoid wasting other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
+Sending unsolicited probes should obviously be done at a rate low enough to not unduly impact the other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
 
 This document suggests a couple of simple techniques allowing any party or organization to understand:
 
@@ -117,7 +117,7 @@ This document suggests a couple of simple techniques allowing any party or organ
 
 - and more significantly who to contact for further information or stop the probing.
 
-Note: it is expected that only good-willing researchers will use these techniques.
+Note: it is expected that only researchers with no bad intentions will use these techniques.
 
 # Probe / Measurement Description
 
@@ -169,7 +169,7 @@ When the desired measurement allows for it, one "probe description URI" should b
 
 - etc.
 
-The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded also by an octet of 0x00.
+The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00.
 
 Note: using the above technique produces a valid and legit packet for all the nodes forwarding the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes. As the insertion of the URI in the packet may not respect the syntax of the protocol, responses may not be received (such a TCP SYN+ACK) and perhaps an ICMP should be expected or more probably an absence of reply.
 
@@ -183,7 +183,7 @@ But there are other considerations to be taken into account: from the payload co
 
 # Security Considerations
 
-While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
+While it is expected that only researchers with no bad intentions will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
 
 This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  As a result, a malevolent actor could provide false information while conducting the probes, so that the action was attributed to a third party.  The recipient of this information cannot, as a result, rely on this information without confirmation.  If a recipient cannot confirm the information or does not wish to do so, they should treat the flows as if there were no attribution.
 
@@ -209,3 +209,5 @@ The "Well-Known URIs" registry should be updated with the following:
 {:numbered="false"}
 
 The authors would like to thank Alain Fiocco, Fernando Gont, Ted Hardie, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
+
+The authors would also like to gracefully acknowledge useful review and comments received from Warren Kumari.
