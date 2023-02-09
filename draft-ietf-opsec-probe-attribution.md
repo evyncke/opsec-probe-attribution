@@ -173,6 +173,17 @@ The URI should start at the first octet of the payload and should be terminated 
 
 Note: the above techniques produce a valid and legitimate packet for all the nodes forwarding the probe, except maybe for a hop-by-hop options header with a PadN option containing the URI. As for the receiver, it may or may not process the packet, depending on where the "probe description URI" is included (e.g., TCP SYN flag with the URI included in data, destination options header with a PadN option containing the URI). As a consequence, a response may not be received. The choice of the URI location is important but depends on the situation, which is why multiple possibilities are proposed in this document.
 
+# Recommendations
+
+Using either the out-of-band or in-band technique, or even both combined, highly depends on will or context. The authors recommend the following classification of priorities:
+
+1. Both out-of-band and in-band
+2. Out-of-band only
+3. In-band only
+4. None
+
+Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of "authenticating" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on (e.g., RIPE Atlas probes), dynamic source addresses, etc. In that case, the in-band solution should be preferred.
+
 # Ethical Considerations
 
 Executing some measurement experiences over the global Internet obviously require some ethical considerations when transit/destination non-solicited parties are involved.
@@ -210,4 +221,4 @@ The "Well-Known URIs" registry should be updated with the following:
 
 The authors would like to thank Alain Fiocco, Fernando Gont, Ted Hardie, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
 
-The authors would also like to gracefully acknowledge useful review and comments received from Warren Kumari.
+The authors would also like to gracefully acknowledge useful review and comments received from Prapanch Ramamoorthy, and Warren Kumari.
