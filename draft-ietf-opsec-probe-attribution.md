@@ -133,16 +133,14 @@ This document defines a probe description URI as a URI pointing to either:
 
 ## Probe Description File {#file}
 
-As defined in {{iana}}, the probe description file must be made available at "https://example.net/.well-known/probing.txt" and should contain the following fields defined in section 2 of {{!RFC9116}}:
+As defined in {{iana}}, the probe description file must be made available at "https://example.net/.well-known/probing.txt". The probe description file must follow the format defined in section 4 of {{!RFC9116}} and should contain the following fields defined in section 2 of {{!RFC9116}}:
 
 - Canonical
 - Contact
 - Expires
 - Preferred-Languages
 
-An additional field "Description" should also be included to describe the measurement:
-
-- Description
+A new field "Description" should also be included to describe the measurement. To match the format defined in section 4 of {{!RFC9116}}, this field must be a one line string.
 
 ### Example
 
@@ -159,7 +157,7 @@ An additional field "Description" should also be included to describe the measur
         Preferred-Languages: en, es, fr
 
         # Probe/Measurement description
-        Description: This is the description of the measurement
+        Description: This is a description of the measurement. The in-band probe attribution was used by [I-D.draft-vyncke-v6ops-james].
 
 # Out-of-band Probe Attribution
 
@@ -169,7 +167,7 @@ An alternative to URI inclusion is to build a specific URI based on the source a
 
 - else (or in addition), the probe description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". In this case, there might be a certificate verification issue.
 
-The built URI must be a reference to the "Probe description Text" (see {{file}}).
+The built URI must be a reference to the probe description file (see {{file}}).
 
 # In-band Probe Attribution
 
