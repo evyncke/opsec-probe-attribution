@@ -119,39 +119,55 @@ This document suggests some simple techniques allowing any party or organization
 
 Note: it is expected that only researchers with no bad intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.
 
-# Probe / Measurement Description
+# Probe Description
 
 ## Probe Description URI {#uri}
 
-This document defines a probe description URI (see {{text}}) as a URI pointing to:
+This document defines a probe description URI as a URI pointing to either:
 
-- a "Probe Description", see {{text}}, e.g., "https://example.net/measurement.txt";
+- a probe description file (see {{file}}) as defined in {{iana}}: "https://example.net/.well-known/probing.txt";
 
-- an email address, e.g., "mailto:eric@example.net";
+- an email address, e.g., "mailto:user@example.net";
 
-- a phone number to call, e.g., "tel:+1-201-555-0123".
+- a phone number, e.g., "tel:+1-201-555-0123".
 
-## Probe Description Text {#text}
+## Probe Description File {#file}
 
-Similarly as in {{!RFC9116}}, when a node probes other nodes over the Internet, the probing node administrator should create a text file following the syntax described in section 4 of {{!RFC9116}}. That file should have the following fields:
+As defined in {{iana}}, the probe description file must be made available at "https://example.net/.well-known/probing.txt". The probe description file must follow the format defined in section 4 of {{!RFC9116}} and should contain the following fields defined in section 2 of {{!RFC9116}}:
 
-- contact;
+- Canonical
+- Contact
+- Expires
+- Preferred-Languages
 
-- expires;
+A new field "Description" should also be included to describe the measurement. To match the format defined in section 4 of {{!RFC9116}}, this field must be a one line string.
 
-- preferred-languages.
+### Example
 
-Plus, another one "description" which is a URI pointing a document describing the measurement.
+        # Canonical URI (if any)
+        Canonical: https://example.net/measurement.txt
+
+        # Contact address
+        Contact: mailto:user@example.net
+
+        # Validity
+        Expires: 2023-12-31T18:37:07z
+
+        # Languages
+        Preferred-Languages: en, es, fr
+
+        # Probe/Measurement description
+        Description: This is a description of the measurement. The in-band probe attribution was used by [I-D.draft-vyncke-v6ops-james].
 
 # Out-of-band Probe Attribution
 
 An alternative to URI inclusion is to build a specific URI based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8::dead, the following URI is built:
 
-- if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the probe description URI is "https://example.net/.well-known/probing.txt" ;
+- if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the probe description URI is "https://example.net/.well-known/probing.txt";
 
 - else (or in addition), the probe description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". In this case, there might be a certificate verification issue.
 
-The built URI must be a reference to the "Probe description Text" (see {{text}}).
+The built URI must be a reference to the probe description file (see {{file}}).
 
 # In-band Probe Attribution
 
@@ -198,7 +214,7 @@ While it is expected that only researchers with no bad intentions will use these
 
 This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  As a result, a malevolent actor could provide false information while conducting the probes, so that the action is attributed to a third party.  As a consequence, the recipient of this information cannot trust this information without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no attribution.
 
-# IANA Considerations
+# IANA Considerations {#iana}
 
 The "Well-Known URIs" registry should be updated with the following additional values (using the template from {{!RFC8615}}):
 
