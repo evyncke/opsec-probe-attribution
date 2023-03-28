@@ -94,6 +94,15 @@ informative:
       -
         name: Robert Beverly
         org: Naval Postgraduate School
+  RIPE_ATLAS:
+    title: RIPE Atlas
+    target: https://atlas.ripe.net/
+  NCSC:
+    title: The National Cyber Security Centre
+    target: https://www.ncsc.gov.uk/
+  NCSC_SCAN_INFO:
+    title: NCSC Scanning information
+    target: https://www.ncsc.gov.uk/information/ncsc-scanning-information
 
 
 --- abstract
@@ -169,6 +178,8 @@ An alternative to URI inclusion is to build a specific URI based on the source a
 
 The built URI must be a reference to the probe description file (see {{file}}).
 
+As an example, the UK National Cyber Security Centre {{NCSC}} uses a similar attribution. They scan for vulnerabilities across internet-connected systems in the UK and publish information on their scanning ({{NCSC_SCAN_INFO}}), providing the address of the webpage in reverse DNS.
+
 # In-band Probe Attribution
 
 When the measurement allows for it, a probe description URI should be included in the payload of all probes sent. This could be:
@@ -177,15 +188,15 @@ When the measurement allows for it, a probe description URI should be included i
 
 - for a {{!RFC792}} ICMPv4 echo request: in the optional data;
 
-- for a {{!RFC768}} UDP datagram: in the data part;
+- for a {{!RFC768}} UDP datagram: in the data part. Note that if the probe is destined to a listened-to/well-known UDP port, the inclusion of the probe description URI may produce undefined results;
 
-- for a {{!RFC793}} TCP packet with the SYN flag: data is allowed in TCP packets with the SYN flag per section 3.4 of {{!RFC793}} (2nd paragraph). However, it may change the way the packet is processed;
+- for a {{!RFC9293}} TCP packet with the SYN flag: data is allowed in TCP packets with the SYN flag per section 3.4 of {{!RFC9293}} (2nd paragraph). However, it may change the way the packet is processed, i.e., SYN packets containing data might be discarded;
 
-- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in a PadN option. However, the PadN option is not recommended: as per the informational {{?RFC4942}}, section 2.1.9.5, it is suggested that PadN options should only contain 0's and be smaller than 8 octets, thus limiting its use for probe attribution. Indeed, inserting the probe description URI in PadN options could bias the measurement itself. For example, the Linux Kernel follows these recommendations since its version 3.5;
+- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in a PadN option. Indeed, the probe attribution URI can only be added to IPv6 packets in some extension headers used for the probing. However, inserting the probe description URI in PadN options could bias the measurement itself: as per the informational {{?RFC4942}}, section 2.1.9.5, it is suggested that a PadN option should only contain 0's and be smaller than 8 octets, thus limiting its use for probe attribution. If a PadN option does not respect the recommendation, it is suggested that one may consider dropping such packets. For example, the Linux Kernel follows these recommendations and discards such packets since its version 3.5;
 
 - etc.
 
-The probe description URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the probe description URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00.
+The probe description URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the probe description URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00. Inserting the probe description URI could obviously bias the measurement itself if the probe packet becomes larger than the path MTU.
 
 Note: the above techniques produce a valid and legitimate packet for all the nodes forwarding the probe, except maybe for a hop-by-hop options header with a PadN option containing the probe description URI. As for the receiver, it may or may not process the packet, depending on where the probe description URI is included (e.g., TCP SYN flag with the probe description URI included in data, destination options header with a PadN option containing the probe description URI). As a consequence, a response may not be received. The choice of the probe description URI location is important and highly depends on the context, which is why multiple possibilities are proposed in this document.
 
@@ -198,7 +209,7 @@ Using either the out-of-band or in-band technique, or even both combined, highly
 3. In-band only
 4. None
 
-Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of "authenticating" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on (e.g., RIPE Atlas probes), dynamic source addresses, etc. In that case, the in-band solution should be preferred.
+Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of "authenticating" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe researcher), dynamic source addresses, etc. In that case, the in-band solution should be preferred.
 
 # Ethical Considerations
 
