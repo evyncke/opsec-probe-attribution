@@ -200,16 +200,15 @@ The probe description URI should start at the first octet of the payload and sho
 
 Note: the above techniques produce a valid and legitimate packet for all the nodes forwarding the probe, except maybe for a hop-by-hop options header with a PadN option containing the probe description URI. As for the receiver, it may or may not process the packet, depending on where the probe description URI is included (e.g., TCP SYN flag with the probe description URI included in data, destination options header with a PadN option containing the probe description URI). As a consequence, a response may not be received. The choice of the probe description URI location is important and highly depends on the context, which is why multiple possibilities are proposed in this document.
 
-# Recommendations
+# Technical Considerations
 
-Using either the out-of-band or in-band technique, or even both combined, highly depends on will or context. The authors recommend the following classification of priorities:
+Using either the out-of-band or in-band technique, or even both combined, highly depends on will or context. This section describes the upsides and downsides of each technique, so that probe owners or probe makers can freely decide what works best for their cases.
 
-1. Both out-of-band and in-band
-2. Out-of-band only
-3. In-band only
-4. None
+The advantage of using the out-of-band technique is a fast and easy setup, i.e., running a web server on a probe device to describe the measurements. Unfortunately, there are some disadvantages too. In some cases, using the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe owner), dynamic source addresses, etc.
 
-Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of "authenticating" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe researcher), dynamic source addresses, etc. In that case, the in-band solution should be preferred.
+The advantage of using the in-band technique is to cover the cases where the out-of-band technique is not possible, as listed above. The disadvantage is to potentially bias the measurements, since packets where the Probe Description URI is added might be discarded depending on where the Probe Description URI is located in the packets, and depending on the context.
+
+Having both the out-of-band and in-band techniques combined also has a big advantage, i.e., it could be used as an indirect means of "authenticating" the Probe Description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). While the out-of-band technique alone is less prone to spoofing, the combination with the in-band technique offers a more complete solution.
 
 # Ethical Considerations
 
@@ -246,4 +245,4 @@ The "Well-Known URIs" registry should be updated with the following additional v
 
 The authors would like to thank Alain Fiocco, Fernando Gont, Ted Hardie, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
 
-The authors would also like to gracefully acknowledge useful review and comments received from Jen Linkova, Prapanch Ramamoorthy, and Warren Kumari.
+The authors would also like to gracefully acknowledge useful review and comments received from Jen Linkova, Prapanch Ramamoorthy, Warren Kumari, and Andrew Shaw.
