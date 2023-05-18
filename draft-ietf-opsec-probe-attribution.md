@@ -166,7 +166,8 @@ A new field "Description" should also be included to describe the measurement. T
         Preferred-Languages: en, es, fr
 
         # Probe/Measurement description
-        Description: This is a description of the measurement. The in-band probe attribution was used by [I-D.draft-vyncke-v6ops-james].
+        Description: This is a one-line string description of the
+        measurement, with no line break.
 
 # Out-of-band Probe Attribution
 
@@ -199,6 +200,8 @@ When the measurement allows for it, a probe description URI should be included i
 The probe description URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the probe description URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00. Inserting the probe description URI could obviously bias the measurement itself if the probe packet becomes larger than the path MTU.
 
 Note: the above techniques produce a valid and legitimate packet for all the nodes forwarding the probe, except maybe for a hop-by-hop options header with a PadN option containing the probe description URI. As for the receiver, it may or may not process the packet, depending on where the probe description URI is included (e.g., TCP SYN flag with the probe description URI included in data, destination options header with a PadN option containing the probe description URI). As a consequence, a response may not be received. The choice of the probe description URI location is important and highly depends on the context, which is why multiple possibilities are proposed in this document.
+
+For the record, the in-band probe attribution was used in {{?I-D.draft-vyncke-v6ops-james}}.
 
 # Operational and Technical Considerations
 
