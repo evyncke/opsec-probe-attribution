@@ -107,18 +107,18 @@ informative:
 
 --- abstract
 
-Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Sometimes these measurements are viewed as unwelcome or aggressive. This document proposes some simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.
+Active measurements can target either collaborating parties or non-collaborating ones. Sometimes these measurements are viewed as unwelcome or aggressive. This document proposes some simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.
 
 
 --- middle
 
 # Introduction
 
-Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Such measurements include {{LARGE_SCALE}} and {{?RFC7872}}.
+Active measurements can target either collaborating parties or non-collaborating ones. Such measurements include {{LARGE_SCALE}} and {{?RFC7872}}.
 
 Sending unsolicited probes should obviously be done at a rate low enough to not unduly impact the other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).
 
-This document suggests some simple techniques allowing any party or organization to understand:
+This document suggests some simple techniques to allow any party or organization to understand:
 
 - what this unsolicited packet is,
 
@@ -126,7 +126,7 @@ This document suggests some simple techniques allowing any party or organization
 
 - and more significantly who to contact for further information or to stop the probing.
 
-Note: it is expected that only researchers with no bad intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.
+Note: it is expected that only researchers with good intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.
 
 # Probe Description
 
@@ -195,9 +195,7 @@ When the measurement allows for it, a probe description URI should be included i
 
 - for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in a PadN option. Indeed, the probe attribution URI can only be added to IPv6 packets in some extension headers used for the probing. However, inserting the probe description URI in PadN options could bias the measurement itself: as per the informational {{?RFC4942}}, section 2.1.9.5, it is suggested that a PadN option should only contain 0's and be smaller than 8 octets, thus limiting its use for probe attribution. If a PadN option does not respect the recommendation, it is suggested that one may consider dropping such packets. For example, the Linux Kernel follows these recommendations and discards such packets since its version 3.5;
 
-- etc.
-
-The probe description URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the probe description URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00. Inserting the probe description URI could obviously bias the measurement itself if the probe packet becomes larger than the path MTU.
+The probe description URI must start at the first octet of the payload and must be terminated by an octet of 0x00, i.e., it must be null terminated. If the probe description URI cannot be placed at the beginning of the payload, then it must be preceded by an octet of 0x00. Inserting the probe description URI could obviously bias the measurement itself if the probe packet becomes larger than the path MTU.
 
 Note: the above techniques produce a valid and legitimate packet for all the nodes forwarding the probe, except maybe for a hop-by-hop options header with a PadN option containing the probe description URI. As for the receiver, it may or may not process the packet, depending on where the probe description URI is included (e.g., TCP SYN flag with the probe description URI included in data, destination options header with a PadN option containing the probe description URI). As a consequence, a response may not be received. The choice of the probe description URI location is important and highly depends on the context, which is why multiple possibilities are proposed in this document.
 
@@ -209,23 +207,23 @@ Using either the out-of-band or in-band technique, or even both combined, highly
 
 The advantages of using the out-of-band technique are that the probing measurement is not impacted by the probe attribution but also that it is easy to setup, i.e., by running a web server on a probe device to describe the measurements. Unfortunately, there are some disadvantages too. In some cases, using the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe owner), dynamic source addresses, etc.
 
-The advantage of using the in-band technique is to cover the cases where the out-of-band technique is not possible, as listed above. The disadvantage is to potentially bias the measurements, since packets with the Probe Description URI might be discarded depending on the context.
+The primary advantage of using the in-band technique is that it covers the cases where the out-of-band technique is not feasible (as described above). The primary disadvantage is that it potentially biases the measurements, since packets with the Probe Description URI might be discarded.
 
 Having both the out-of-band and in-band techniques combined also has a big advantage, i.e., it could be used as an indirect means of "authenticating" the Probe Description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). While the out-of-band technique alone is less prone to spoofing, the combination with the in-band technique offers a more complete solution.
 
 # Ethical Considerations
 
-Executing some measurement experiences over the global Internet obviously require some ethical considerations when transit/destination non-solicited parties are involved.
+Executing measurement experiences over the global Internet obviously requires ethical consideration, especially when transit/destination unsolicited parties are involved.
 
-This document proposes a common way to identity the source and the purpose of active probing in order to reduce the potential burden on the non-solicited parties.
+This document proposes a common way to identity the source and the purpose of active probing in order to reduce the potential burden on the unsolicited parties.
 
 But there are other considerations to be taken into account: from the payload content (e.g., is the encoding valid ?) to the transmission rate (see also {{IPV6_TOPOLOGY}} and {{IPV4_TOPOLOGY}} for some probing speed impacts). Those considerations are out of scope of this document.
 
 # Security Considerations {#security}
 
-While it is expected that only researchers with no bad intentions will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.
+It is expected that only researchers with good intentions will use these techniques, which will simplify and reduce the time to identify probes across the Internet.
 
-This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  As a result, a malevolent actor could provide false information while conducting the probes, so that the action is attributed to a third party.  As a consequence, the recipient of this information cannot trust this information without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no attribution.
+This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  Therefore, a malevolent actor could provide false information while conducting the probes, so that the action is attributed to a third party. In that case, not only this third party would be wrongly accused, but it might also be exposed to unwanted solicitations (e.g., angry emails or phone calls, if the malevolent actor used someone else's email address or phone number). As a consequence, the recipient of this information cannot trust it without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no attribution.
 
 # IANA Considerations {#iana}
 
