@@ -25,7 +25,7 @@ author:
     ins: E. Vyncke
     name: Éric Vyncke
     organization: Cisco
-    street: De Kleetlaan 64
+    street: De Kleetlaan 6A
     code: 1831
     city: Diegem
     country: Belgium
