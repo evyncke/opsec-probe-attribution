@@ -107,16 +107,18 @@ informative:
 
 --- abstract
 
-Active measurements can target either collaborating parties or non-collaborating ones. Sometimes these measurements, also called probes, are viewed as unwelcome or aggressive. This document suggests some simple techniques for a source to identify its probes, allowing any party or organization to understand what an unsolicited probe packet is, what its purpose is, and more importantly who to contact.
+Active measurements over the public Internet can target either collaborating parties or non-collaborating ones. Sometimes these measurements, also called probes, are viewed as unwelcome or aggressive.
+
+This document suggests some simple techniques for a source to identify its probes, allowing any party or organization to understand what an unsolicited probe packet is, what its purpose is, and more importantly who to contact. The technique relies on off-line analysis of the probe, therefore it does not require any change in the data or control plane. It has been designed mainly for layer-3 measurements.
 
 
 --- middle
 
 # Introduction
 
-Active measurements can target either collaborating parties or non-collaborating ones. Such measurements, also called probes, include {{LARGE_SCALE}} and {{?RFC7872}}.
+Many measurement researches ({{LARGE_SCALE}}, {{?RFC7872}}, and {{?I-D.draft-vyncke-v6ops-james}}) are about sending IP packets (sometimes with extension headers or layer-4 headers) over the public Internet and those packets can be destined to either collaborating parties or non-collaborating ones. Such packets are called probes in this document.
 
-Sending unsolicited probes should obviously be done at a rate low enough to not unduly impact the other parties' resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices through which those probes are transiting (e.g., an Internet transit router).
+Sending unsolicited probes should obviously be done at a rate low enough to not unduly impact the other parties' resources. But even at a low rate, those probes could trigger an alarm that will request some investigations by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices through which those probes are transiting (e.g., an Internet transit router). The investigation will be done off-line by using packet captures, therefore the probe attribution does not require any change in the data or control planes.
 
 This document suggests some simple techniques for a source to identify its probes, allowing any party or organization to understand:
 
@@ -126,7 +128,9 @@ This document suggests some simple techniques for a source to identify its probe
 
 - and more importantly who to contact for further information.
 
-Note: it is expected that only researchers with good intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.
+It is expected that only researchers with good intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.
+
+While the technique could be used to mark measurements done at any layer of the protocol stack, it is mainly designed to work for measurements done at layer 3 (and its associated options or extension headers).
 
 # Probe Description
 
@@ -177,7 +181,7 @@ A possibility for probe attribution is to build a specific URI based on the sour
 
 - if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
 
-- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}} ), then there will be a certificate verification issue.
+- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}}), then there will be a certificate verification issue.
 
 The built URI must be a reference to the Probe Description File (see {{file}}).
 
@@ -199,13 +203,15 @@ Another possibility for probe attribution is to include a Probe Description URI 
 
 The Probe Description URI must start at the first octet of the payload and must be terminated by an octet of 0x00, i.e., it must be null terminated. If the Probe Description URI cannot be placed at the beginning of the payload, then it must be preceded by an octet of 0x00. Inserting the Probe Description URI could obviously bias the measurement itself if the probe packet becomes larger than the path MTU.
 
+Note: using a magic string (i.e., a unique special opaque marker) to signal the presence of the Probe Description URI is not recommended as some transit nodes could apply a different processing for packets containing this magic string.
+
 For the record, the in-band probe attribution was used in {{?I-D.draft-vyncke-v6ops-james}}.
 
 # Operational and Technical Considerations
 
 Using either the out-of-band or in-band technique, or even both combined, highly depends on intent or context. This section describes the upsides and downsides of each technique, so that probe owners or probe makers can freely decide what works best for their cases.
 
-The advantages of using the out-of-band technique are that the probing measurement is not impacted by the probe attribution but also that it is easy to setup, i.e., by running a web server on a probe device to describe the measurements. Unfortunately, there are some disadvantages too. In some cases, using the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe owner), dynamic source addresses, etc.
+The advantages of using the out-of-band technique are that the probing measurement is not impacted by the probe attribution but also that it is easy to set up, i.e., by running a web server on a probe device to describe the measurements. Unfortunately, there are some disadvantages too. In some cases, using the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe owner), dynamic source addresses, etc.
 
 The primary advantage of using the in-band technique is that it covers the cases where the out-of-band technique is not feasible (as described above). The primary disadvantage is that it could potentially bias the measurements, since packets with the Probe Description URI might be discarded. For example, data is allowed in TCP segments with the SYN flag ({{!RFC9293}}) but may change the way they are processed, i.e., TCP segments with the SYN flag containing the Probe Description URI might be discarded. Another example is the Probe Description URI included in a Hop-by-Hop or Destination Options header, inside a PadN option. As per the informational {{?RFC4942}}, section 2.1.9.5, it is suggested that a PadN option should only contain 0's and be smaller than 8 octets, thus limiting its use for probe attribution. If a PadN option does not respect the recommendation, it is suggested that one may consider dropping such packets. For example, the Linux Kernel follows these recommendations and discards such packets since its version 3.5;
 
