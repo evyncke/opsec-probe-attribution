@@ -138,7 +138,7 @@ This document defines a Probe Description URI as a URI pointing to either:
 
 - a Probe Description File (see {{file}}) as defined in {{iana}}, e.g., "https://example.net/.well-known/probing.txt";
 
-- an email address, e.g., "mailto:user@example.net";
+- an email address, e.g., "mailto:lab@example.net";
 
 - a phone number, e.g., "tel:+1-201-555-0123".
 
@@ -159,7 +159,7 @@ A new field "Description" should also be included to describe the measurement. T
         Canonical: https://example.net/measurement.txt
 
         # Contact address
-        Contact: mailto:user@example.net
+        Contact: mailto:lab@example.net
 
         # Validity
         Expires: 2023-12-31T18:37:07z
@@ -177,7 +177,7 @@ A possibility for probe attribution is to build a specific URI based on the sour
 
 - if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
 
-- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". In this case, there might be a certificate verification issue.
+- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{RFC8738}}), then there will be a certificate verification issue.
 
 The built URI must be a reference to the Probe Description File (see {{file}}).
 
@@ -224,6 +224,8 @@ But there are other considerations to be taken into account: from the payload co
 It is expected that only researchers with good intentions will use these techniques, which will simplify and reduce the time to identify probes across the Internet.
 
 This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  Therefore, a malevolent actor could provide false information while conducting the probes, so that the action is attributed to a third party. In that case, not only would this third party be wrongly accused, but it might also be exposed to unwanted solicitations (e.g., angry emails or phone calls, if the malevolent actor used someone else's email address or phone number). As a consequence, the recipient of this information cannot trust it without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no probe attribution.
+
+As the Probe Description URI is transmitted in the clear and as the Probe Description File is publicly readable, Personally Identifiable Information (PII) should not be used for email address and phone number; a generic / group email address and phone number should be preferred.
 
 # IANA Considerations {#iana}
 
