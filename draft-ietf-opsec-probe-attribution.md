@@ -254,4 +254,4 @@ The "Well-Known URIs" registry should be updated with the following additional v
 
 The authors would like to thank Alain Fiocco, Fernando Gont, Ted Hardie, Mehdi Kouhen, and Mark Townsley for helpful discussions as well as Raphaël Léas for an early implementation.
 
-The authors would also like to gracefully acknowledge useful review and comments received from Jen Linkova, Prapanch Ramamoorthy, Warren Kumari, and Andrew Shaw.
+The authors would also like to gracefully acknowledge useful reviews and comments received from Warren Kumari, Jen Linkova, Mark Nottingham, Prapanch Ramamoorthy, Tirumal Reddy, Andrew Shaw, and Magnus Westerlund.
