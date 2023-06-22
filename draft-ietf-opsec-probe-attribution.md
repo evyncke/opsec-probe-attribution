@@ -177,7 +177,7 @@ A possibility for probe attribution is to build a specific URI based on the sour
 
 - if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
 
-- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{RFC8738}}), then there will be a certificate verification issue.
+- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}} ), then there will be a certificate verification issue.
 
 The built URI must be a reference to the Probe Description File (see {{file}}).
 
