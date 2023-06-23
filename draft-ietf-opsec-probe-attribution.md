@@ -177,11 +177,11 @@ A new field "Description" should also be included to describe the measurement. T
 
 # Out-of-band Probe Attribution
 
-A possibility for probe attribution is to build a specific URI based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8::dead, the following URI is built:
+A possibility for probe attribution is to build a specific URI based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8:dead::1, the following URI is built:
 
-- if the reverse DNS record for 2001:db8::dead exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
+- if the reverse DNS record for 2001:db8:dead::1 exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
 
-- else (or in addition), the Probe Description URI is "https://\[2001:db8::dead\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}}), then there will be a certificate verification issue.
+- else (or in addition), the Probe Description URI is "https://\[2001:db8:dead::1\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}}), then there will be a certificate verification issue.
 
 The built URI must be a reference to the Probe Description File (see {{file}}).
 
