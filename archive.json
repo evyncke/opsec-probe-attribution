@@ -1,0 +1,531 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2023-06-20T01:21:33.095246+00:00",
+  "repo": "evyncke/opsec-probe-attribution",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOGyfVac5dfJ7b",
+      "title": "[Review] Jen Linkova",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/issues/1",
+      "state": "CLOSED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 1. SHOULD the document use the normative language? It might be just me\r\n> but I do find 'should'/'must' in lower case a bit confusing in RFCs..\r\n\r\nTODO ?\r\n\r\n> 2. The Intro says: \"Note: it is expected that only good-willing\r\n> researchers will use these techniques\". Does it mean that we do not\r\n> expect bad guys to use it? For a security-related document it's a very\r\n> optimistic expectation, IMHO ;)\r\n\r\n```diff\r\n-Note: it is expected that only researchers with no bad intentions will use these techniques.\r\n+Note: it is expected that only researchers with no bad intentions will use these techniques, although anyone might use them. This is discussed in {{security}}.\r\n\r\n-# Security Considerations\r\n+# Security Considerations {#security}\r\n```\r\n\r\n> 3. Section 3 says \"When it is not possible to include the \"probe\r\n> description URI\" in the probe packet itself, then a specific URI must\r\n> be constructed based on the source address of the probe packet\". This\r\n> sounds like the draft recommends in-band attribution over out-of-band.\r\n> I might be wrong but out-of-band attribution is more reliable as it is\r\n> less prone to spoofing.\r\n\r\n```diff\r\n-When it is not possible to include the \"probe description URI\" in the probe packet itself, then a specific URI must be constructed based on the source address of the probe packet following {{!RFC8615}}, e.g., for a probe source address of 2001:db8::dead, the following URI are constructed:\r\n+A specific URI is built based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8::dead, the following URI is built:\r\n```\r\n\r\n> Shall the draft make some recommendations for probe owners (and probe\r\n> makers, actually - have you talked to RIPE Atlas guys?)\r\n\r\n```diff\r\n+# Recommendations\r\n+\r\n+Using either the out-of-band or in-band technique, or even both combined, highly depends on will or context. The authors recommend the following classification of priorities:\r\n+\r\n+1. Both out-of-band and in-band\r\n+2. Out-of-band only\r\n+3. In-band only\r\n+4. None\r\n+\r\n+Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of \"authenticating\" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on (e.g., RIPE Atlas probes), dynamic source addresses, etc. In that case, the in-band solution should be preferred.\r\n```\r\n\r\n> Maybe the security section shall talk a bit more about what could be\r\n> trusted and what could not?\r\n\r\nTODO\r\n\r\n> 4. Section 3: \"following the syntax described in section 3 of\r\n> [RFC9116]\" - it looks like section 3 of RFC9116 defines the location,\r\n> not the format. Did you mean section 4?\r\n\r\n```diff\r\n-Similarly, as in {{!RFC9116}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 3 of {{!RFC9116}} and should have the following fields:\r\n+Similarly, as in {{!RFC9116}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 4 of {{!RFC9116}} and should have the following fields:\r\n```\r\n\r\n> 5. \"Plus, another one \"description\" which is a URI pointing to a\r\n> document describing the measurement.\"\r\n> \r\n> Are you suggesting that an in- or out-of-band URI points to a probe\r\n> description text file which in turns contains another URI pointing to\r\n> a document describing the measurement? Can the  probe description text\r\n> file contains the\r\n\r\nTODO clarify/rephrase\r\n\r\n> 6. Accessing a web-page on a probe device might be problematic. It\r\n> could be behind a firewall, or the source address might be a random\r\n> one from a large prefix. A stupid idea: can we use a camel..sorry, I\r\n> meant DNS - as an alternative option? ;)\r\n> At least that would provide some sort of authentication.\r\n\r\nAfter consideration, I think the use of DNS is already covered in the \"Out-of-band Probe Attribution\" section. What am I missing?\r\n\r\n> Section 2.2:\r\n> \"Similarly, as in [RFC9116], when a node probes other nodes over the\r\n> Internet, it should create a text file following the syntax described\r\n> in section 3 of [RFC9116] and should have the following fields:\"\r\n> \r\n> maybe rephrase as '...the probing node administrator should create a\r\n> text file following the syntax described in section 3 of [RFC9116].\r\n> That file should have the following fields:\"?\r\n\r\n```diff\r\n-Similarly, as in {{!RFC9116}}, when a node probes other nodes over the Internet, it should create a text file following the syntax described in section 3 of {{!RFC9116}} and should have the following fields:\r\n+Similarly as in {{!RFC9116}}, when a node probes other nodes over the Internet, the probing node administrator should create a text file following the syntax described in section 4 of {{!RFC9116}}. That file should have the following fields:\r\n```\r\n\r\n> IANA Consideration:\r\n> \"additional values\" - I assume it shouldn't be a list item but a part\r\n> of the previous sentence, right?\r\n\r\n```diff\r\n-The \"Well-Known URIs\" registry should be updated with the following:\r\n-\r\n-- additional values (using the template from {{!RFC8615}}):\r\n+The \"Well-Known URIs\" registry should be updated with the following additional values (using the template from {{!RFC8615}}):\r\n```",
+      "createdAt": "2023-02-02T17:14:18Z",
+      "updatedAt": "2023-02-27T12:04:31Z",
+      "closedAt": "2023-02-27T12:04:31Z",
+      "comments": []
+    },
+    {
+      "number": 2,
+      "id": "I_kwDOGyfVac5dlhox",
+      "title": "[Review] Prapanch Ramamoorthy",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/issues/2",
+      "state": "CLOSED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> Talking about using both in-band and out-of-band together, what would be \r\n> the use case there and also, the priority of operations?\r\n\r\n```diff\r\n+# Recommendations\r\n+\r\n+Using either the out-of-band or in-band technique, or even both combined, highly depends on will or context. The authors recommend the following classification of priorities:\r\n+\r\n+1. Both out-of-band and in-band\r\n+2. Out-of-band only\r\n+3. In-band only\r\n+4. None\r\n+\r\n+Both out-of-band and in-band combined should be preferred. It could be used as an indirect means of \"authenticating\" the probe description URI in the in-band probe, thanks to a correlation with the out-of-band technique (e.g., a reverse DNS lookup). However, the out-of-band technique might not be possible due to several conditions: the presence of a NAT, too many endpoints to run a web server on (e.g., RIPE Atlas probes), dynamic source addresses, etc. In that case, the in-band solution should be preferred.\r\n```\r\n\r\n> Lastly, considering this can lead to reflection/amplification style \r\n> attacks, should we considering call this out under \u201csecurity \r\n> considerations\u201d? It can also include certain recommendations for \r\n> performing lookups such caching and rate-limiting of requests.\r\n\r\nAfter careful consideration, I think it is already covered in the Security section.",
+      "createdAt": "2023-02-03T16:38:47Z",
+      "updatedAt": "2023-02-27T12:04:30Z",
+      "closedAt": "2023-02-27T12:04:30Z",
+      "comments": []
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOGyfVac5d9U1r",
+      "title": "[Review] Warren Kumari",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/issues/3",
+      "state": "CLOSED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 1:  \"This is similar scan and could be perceived as aggressive.\"  \u2014 I'm \r\n> assuming this should be something like \"This is similar *to scanning*, \r\n> and \u2026\" . This also somewhat implies that scanning is usually viewed as \r\n> something negative. Perhaps just change this to \"Sometimes these \r\n> measurements are viewed as unwelcome or aggressive\" (or similar).\r\n>\r\n> 2: \"a proposes a couple of simple\" - I'd suggest \"some simple\" (\"a \r\n> couple\" often implies two).\r\n\r\n```diff\r\n-Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. This is similar scan and could be perceived as aggressive. This document proposes a couple of simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.\r\n+Active measurements at Internet-scale can target either collaborating parties or non-collaborating ones. Sometimes these measurements are viewed as unwelcome or aggressive. This document proposes some simple techniques allowing any party or organization to understand what this unsolicited packet is, what is its purpose, and more importantly who to contact.\r\n\r\n-This document suggests a couple of simple techniques allowing any party or organization to understand:\r\n+This document suggests some simple techniques allowing any party or organization to understand:\r\n```\r\n\r\n> 3:  \"Sending unsolicited probes should obviously be done at a rate low \r\n> enough to avoid wasting other parties resources.\" - *Any* unsolicited \r\n> scan is wasting my resources, and \"low enough\" is largely meaningless - \r\n> is this one packet per day per AS, or is 1Kpps OK? Perhaps \"at a rate \r\n> low enough to not unduly impact the other parties resources\"? This is \r\n> still vary vague, but seems less hand-wavey.\r\n\r\n```diff\r\n-Sending unsolicited probes should obviously be done at a rate low enough to avoid wasting other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).\r\n+Sending unsolicited probes should obviously be done at a rate low enough to not unduly impact the other parties resources. But even at a low rate, those probes could trigger an alarm that will request some investigation by either the party receiving the probe (i.e., when the probe destination address is one address assigned to the receiving party) or by a third party having some devices where those probes are transiting (e.g., an Internet transit router).\r\n```\r\n\r\n> 4: \"only good-willing researchers\" doesn't read very well. Unfortunately \r\n> I don't have any other suggestions (other than 'white-hat' which is \r\n> unlikely to fly\u2026)\r\n\r\n```diff\r\n-Note: it is expected that only good-willing researchers will use these techniques.\r\n+Note: it is expected that only researchers with no bad intentions will use these techniques.\r\n\r\n-While it is expected that only good-willing researchers will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.\r\n+While it is expected that only researchers with no bad intentions will use these techniques, they will simplify and shorten the time to identify a probing across the Internet.\r\n```\r\n\r\n> 5: \"If  the URI cannot be placed at the beginning of the payload, then \r\n> it should be preceded also by an octet of 0x00.\" \u2014 I think drop the \r\n> \"also\" (or, if you really want it, then \"it should also be preceded by an\u2026\")\r\n\r\n```diff\r\n-The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded also by an octet of 0x00.\r\n+The URI should start at the first octet of the payload and should be terminated by an octet of 0x00, i.e., it must be null terminated. If the URI cannot be placed at the beginning of the payload, then it should be preceded by an octet of 0x00.\r\n```\r\n\r\n> 6: \"Note: using the above technique produces a valid and legit packet\" - \r\n> drop 'and legit'. If you really want, you could s/legit/legitimate/, but \r\n> it is still unclear what exactly this means\u2026\r\n>\r\n> 7: \"The node receiving the probe may or may not process the received \r\n> packet, but this should cause no harm if the probing rate is very low as \r\n> compared to the network bandwidth and to the processing capacity of all \r\n> the nodes.\" \u2014 er, what? If you add up  \"the processing capacity of all \r\n> the nodes\" in e.g AWS, and sent a very low probing rate to one server, \r\n> it would presumably cause harm. This sentence needs work :-P\r\n>\r\n> 8: \"As the insertion of the URI in the packet may not respect the syntax \r\n> of the protocol,\r\n>     responses may not be received (such a TCP SYN+ACK) and perhaps \r\n> an ICMP should be expected or more probably an absence of reply.\" \u2014 \r\n> Today's Zen Koan:  if a probing packet falls in the forest, and no one \r\n> replies, did it get there? (If I'm probing subnet foo for \r\n> <some_malware_which_listens_on_port_1337>, and inserting the URI means I \r\n> get no reply, then, well,....) Perhaps this needs some wording around \r\n> \"additional attribution packets\" or similar?\r\n\r\n```diff\r\n-- for a {{!RFC793}} TCP packet with the SYN flag: data is allowed in TCP packets with the SYN flag per section 3.4 of {{!RFC793}} (2nd paragraph);\r\n+- for a {{!RFC793}} TCP packet with the SYN flag: data is allowed in TCP packets with the SYN flag per section 3.4 of {{!RFC793}} (2nd paragraph). However, it may change the way the packet is processed;\r\n \r\n-- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in the PadN option. Note that, per the informational {{?RFC4942}} section 2.1.9.5, it is suggested that PadN option should only contain 0x0 and be smaller than 8 octets, so the proposed insertion of the URI in PadN option could have influence on the measurement itself;\r\n+- for a {{!RFC8200}} IPv6 packet with either hop-by-hop or destination options headers, in an experimental option. In theory, the PadN option could also be a possibility but is not recommended: as per the informational {{?RFC4942}}, section 2.1.9.5, it is suggested that PadN options should only contain 0x0 and be smaller than 8 octets. Therefore, inserting the URI in PadN options could bias the measurement itself. For example, the Linux Kernel follows these recommendations since its version 3.5;\r\n\r\n-Note: using the above technique produces a valid and legit packet for all the nodes forwarding the probe. The node receiving the probe may or may not process the received packet, but this should cause no harm if the probing rate is very low as compared to the network bandwidth and to the processing capacity of all the nodes. As the insertion of the URI in the packet may not respect the syntax of the protocol, responses may not be received (such a TCP SYN+ACK) and perhaps an ICMP should be expected or more probably an absence of reply.\r\n+Note: using the above technique produces a valid and legitimate packet for all the nodes forwarding the probe. As for the receiver, it may or may not process the packet, depending on where the \"probe description URI\" is included (e.g., TCP SYN flag with the URI included in data). As a consequence, a response may not be received. The choice of the URI location is important but depends on the use case, which is why multiple possibilities are proposed. In all cases, the probing rate should be done at a rate low enough to not unduly impact the destination.\r\n```",
+      "createdAt": "2023-02-08T15:42:15Z",
+      "updatedAt": "2023-02-27T12:04:30Z",
+      "closedAt": "2023-02-27T12:04:29Z",
+      "comments": [
+        {
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "body": "Thanks @wkumari for the review.\r\n\r\nJustin has already provided PR to address your comments; notably about 'good-willing people'",
+          "createdAt": "2023-02-27T11:52:08Z",
+          "updatedAt": "2023-02-27T11:52:08Z"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOGyfVac5eD6FE",
+      "title": "Use an identifier (magic number) ?",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/issues/6",
+      "state": "OPEN",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Robert Story:\r\n\r\n> On the in-bound approach have you thought about putting some identifier in the packet so that wireshark/tcpdump could identify it? The fact networks could filter these out could be considered a feature, you can normally opt out of this sort of research problem.",
+      "createdAt": "2023-02-09T15:14:14Z",
+      "updatedAt": "2023-02-27T11:50:16Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "body": "As discussed, this could add complexity for little benefit.",
+          "createdAt": "2023-02-27T11:50:16Z",
+          "updatedAt": "2023-02-27T11:50:16Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOGyfVac5eFkHv",
+      "title": "Ron Bonica's comment",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/issues/7",
+      "state": "OPEN",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Ron: consequence could be that network operators filter packets containing the URI. The reason is simple: there is no/low benefit for them to participate in the probe experiment and also because there might be risks involved for them --> all of this may bias the results",
+      "createdAt": "2023-02-09T20:10:28Z",
+      "updatedAt": "2023-02-27T11:49:48Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "body": "This is even a good thing as this in-band 'tag' could be used by SP.\r\n\r\nRather leave the text unchanged ?",
+          "createdAt": "2023-02-27T11:49:48Z",
+          "updatedAt": "2023-02-27T11:49:48Z"
+        }
+      ]
+    }
+  ],
+  "pulls": [
+    {
+      "number": 4,
+      "id": "PR_kwDOGyfVac5Ji3p6",
+      "title": "(WIP) Review from Warren Kumari",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/4",
+      "state": "CLOSED",
+      "author": "IurmanJ",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Still a Work In Progress...",
+      "createdAt": "2023-02-08T17:02:54Z",
+      "updatedAt": "2023-02-08T17:22:42Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "f9609f9b3ec4005356bdace44b67d29df5435844",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "review-warren-kumari",
+      "headRefOid": "7411b21a5748c1656759d8f565b89664f2fd4526",
+      "closedAt": "2023-02-08T17:22:41Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 5,
+      "id": "PR_kwDOGyfVac5Ji-bj",
+      "title": "(WIP) Reviews",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/5",
+      "state": "MERGED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(WIP) Review from Warren Kumari",
+      "createdAt": "2023-02-08T17:23:33Z",
+      "updatedAt": "2023-02-27T12:09:36Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "f9609f9b3ec4005356bdace44b67d29df5435844",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "reviews",
+      "headRefOid": "a5817ac834c8c331ab5e8a6aa5a0091e7318ba21",
+      "closedAt": "2023-02-27T12:04:28Z",
+      "mergedAt": "2023-02-27T12:04:28Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "00ae6dd560c2dcd11aa4f173058a9f8ac024f984"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5OaAJa",
+          "commit": {
+            "abbreviatedOid": "bc0c1dd"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-02-27T11:58:41Z",
+          "updatedAt": "2023-02-27T11:58:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOGyfVac5K1qaB",
+      "title": "Rewrite critical part",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/8",
+      "state": "MERGED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Make this important part easier to read/understand",
+      "createdAt": "2023-02-27T14:30:51Z",
+      "updatedAt": "2023-03-05T12:17:20Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "00ae6dd560c2dcd11aa4f173058a9f8ac024f984",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "rephrase",
+      "headRefOid": "aea36df8df7c6211f7dc0f697a2f22dbd006b706",
+      "closedAt": "2023-03-05T08:37:42Z",
+      "mergedAt": "2023-03-05T08:37:42Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "cf54457b141c21979e95f4849d1d0c05b4eeca13"
+      },
+      "comments": [
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> If RFC 9116 allows for multiple lines field, then in the example make it multi-line and refers to JAMES ;-)\r\n\r\nRFC 9116 considers that a field (line) ends with a CRLF. So either we have the following:\r\n\r\n```diff\r\n-        Description: This is the description of the measurement\r\n+        Description: This is a description of the measurement. For instance, the in-band probe attribution was used by [I-D.draft-vyncke-v6ops-james].\r\n```\r\n\r\nOr we specify that the \"Description\" field can be multiline and have the following:\r\n\r\n```diff\r\n-        Description: This is the description of the measurement\r\n+        Description: This is a multiline description of the measurement.\r\n+                     For instance, the in-band probe attribution was used\r\n+                     by [I-D.draft-vyncke-v6ops-james].\r\n```\r\n\r\nPros: this document introduces it, so we can specify it. Cons: doesn't match RFC 9116's grammar, which is not good.\r\n\r\nThoughts? I'd go for the first IMHO (which is equal to a -very long- line, not a multiline).",
+          "createdAt": "2023-02-27T15:57:38Z",
+          "updatedAt": "2023-02-27T16:04:42Z"
+        },
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I just added a commit on top of the PR to address your comment.",
+          "createdAt": "2023-02-27T16:45:48Z",
+          "updatedAt": "2023-02-27T16:45:48Z"
+        },
+        {
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "body": "Let's keep it simple, i.e., no multi-line then to keep RFC 9116 syntax but you can still add the JAMES I-D reference in the example (this will be a long line though but this is OK)\r\n",
+          "createdAt": "2023-02-27T16:50:34Z",
+          "updatedAt": "2023-02-27T16:50:34Z"
+        },
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "All right, should be good now :-)",
+          "createdAt": "2023-02-27T16:57:29Z",
+          "updatedAt": "2023-02-27T16:57:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5ObkPK",
+          "commit": {
+            "abbreviatedOid": "0123b30"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "If RFC 9116 allows for multiple lines field, then in the example make it multi-line and refers to JAMES ;-)",
+          "createdAt": "2023-02-27T15:37:35Z",
+          "updatedAt": "2023-02-27T15:37:35Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOGyfVac5O_Ih8",
+          "commit": {
+            "abbreviatedOid": "aea36df"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-05T08:37:32Z",
+          "updatedAt": "2023-03-05T08:37:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOGyfVac5NDpxB",
+      "title": "WGLC revision",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/9",
+      "state": "MERGED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-28T11:15:45Z",
+      "updatedAt": "2023-03-29T01:24:25Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "cf54457b141c21979e95f4849d1d0c05b4eeca13",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "WGLC-version",
+      "headRefOid": "dfce1e13f6e79b9c81d5eca4abdb3b7d38b5da5a",
+      "closedAt": "2023-03-29T01:19:37Z",
+      "mergedAt": "2023-03-29T01:19:37Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "c7bf949d0f164c4438b8429cad61c115960eab8a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5RLwTB",
+          "commit": {
+            "abbreviatedOid": "46ddcc0"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2023-03-28T23:16:40Z",
+          "updatedAt": "2023-03-28T23:18:52Z",
+          "comments": [
+            {
+              "originalPosition": 30,
+              "body": "s/the inclusion of the probe description URI may be undefined;/the inclusion of the probe description URI may produce undefined results;/",
+              "createdAt": "2023-03-28T23:16:41Z",
+              "updatedAt": "2023-03-28T23:18:52Z"
+            },
+            {
+              "originalPosition": 50,
+              "body": "s/no access to the source (e.g., RIPE Atlas {{RIPE_ATLAS}} probes)/, the probe source IP address cannot be known (e.g., RIPE Atlas {{RIPE_ATLAS}} probes are sent from IP addresses not owned by the probe researcher)/",
+              "createdAt": "2023-03-28T23:18:38Z",
+              "updatedAt": "2023-03-28T23:18:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOGyfVac5RMFTP",
+          "commit": {
+            "abbreviatedOid": "dfce1e1"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-03-29T01:19:29Z",
+          "updatedAt": "2023-03-29T01:19:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOGyfVac5NZJp-",
+      "title": "Andrew's review",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/10",
+      "state": "CLOSED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-03-31T22:59:49Z",
+      "updatedAt": "2023-04-02T12:34:07Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "c7bf949d0f164c4438b8429cad61c115960eab8a",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "iurman-draft-ietf-opsec-probe-attribution-03",
+      "headRefOid": "ff7982ce1b65ffd3e45dd21198c45cebdb59b409",
+      "closedAt": "2023-04-02T12:30:03Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Whoops, I accidentally deleted my remote branch included in the PR. A new PR is therefore available, sorry for that.",
+          "createdAt": "2023-04-02T12:34:07Z",
+          "updatedAt": "2023-04-02T12:34:07Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5RhoG-",
+          "commit": {
+            "abbreviatedOid": "ff7982c"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "Good to go for me",
+          "createdAt": "2023-04-01T00:12:44Z",
+          "updatedAt": "2023-04-01T00:15:05Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "s/\r\nThe advantage of using the out-of-band technique is a fast and easy setup/\r\nThe advantages of using the out-of-band technique are that the probing measurement is not impacted by the probe attribution but also that it is easy for the probe researcher/",
+              "createdAt": "2023-04-01T00:12:44Z",
+              "updatedAt": "2023-04-01T00:15:05Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "Ou \"Operational and Technical Considerations\"",
+              "createdAt": "2023-04-01T00:13:21Z",
+              "updatedAt": "2023-04-01T00:15:05Z"
+            },
+            {
+              "originalPosition": 17,
+              "body": "s/since packets where the Probe Description URI is added might be discarded depending on where the Probe Description URI is located in the packets, and depending on the context/since packets with the Probe Description URI might be discarded depending on the context",
+              "createdAt": "2023-04-01T00:14:26Z",
+              "updatedAt": "2023-04-01T00:15:05Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOGyfVac5NbnxO",
+      "title": "Andrew's review",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/11",
+      "state": "MERGED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-04-02T12:32:41Z",
+      "updatedAt": "2023-04-02T23:07:53Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "c7bf949d0f164c4438b8429cad61c115960eab8a",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "iurman-draft-ietf-opsec-probe-attribution-03",
+      "headRefOid": "b113f15d39d8dbfe76d33999b30c765044703603",
+      "closedAt": "2023-04-02T19:18:46Z",
+      "mergedAt": "2023-04-02T19:18:46Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "f82699d7f2e051be58c3039342d96606b9d53227"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5RjALh",
+          "commit": {
+            "abbreviatedOid": "b113f15"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-04-02T19:18:36Z",
+          "updatedAt": "2023-04-02T19:18:36Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOGyfVac5QzeK1",
+      "title": "idnits fixed (version -04 published)",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/12",
+      "state": "MERGED",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "idnits fixed (version -04 published)",
+      "createdAt": "2023-05-18T12:51:20Z",
+      "updatedAt": "2023-06-19T08:41:25Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "f82699d7f2e051be58c3039342d96606b9d53227",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "main",
+      "headRefOid": "c68a9f0f46ccd1031b52823ebfee29da63a89376",
+      "closedAt": "2023-06-19T08:41:25Z",
+      "mergedAt": "2023-06-19T08:41:25Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "34b328bac68d87e0cfd83861babbbc520b08b519"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOGyfVac5YjhAF",
+          "commit": {
+            "abbreviatedOid": "c68a9f0"
+          },
+          "author": "evyncke",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-06-19T08:40:18Z",
+          "updatedAt": "2023-06-19T08:40:18Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
