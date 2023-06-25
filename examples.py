@@ -10,7 +10,7 @@ ip6DH = IPv6ExtHdrDestOpt(options=PadN(optdata=b"https://example.net/.well-known
 wrpcap('examples.pcap', IPv6(src=source, dst=destination) / ip6DH)
 ip6TCP = TCP(sport=RandShort(), dport=33434, flags="S") / (b"mailto:lab@example.net" + b"\0")
 wrpcap('examples.pcap', IPv6(src=source, dst=destination) / ip6TCP, append=True)
-ip6ICMP = ICMPv6EchoReply(data=b"tel:+1-201-555-0123" + b"\0")
+ip6ICMP = ICMPv6EchoRequest(data=b"tel:+1-201-555-0123" + b"\0")
 wrpcap('examples.pcap', IPv6(src=source, dst=destination) / ip6ICMP, append=True)
 
 # Let's also make one legacy IPv4 example
