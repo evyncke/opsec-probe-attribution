@@ -200,8 +200,8 @@ Table of Contents
    *  if the reverse DNS record for 2001:db8:dead::1 exists, e.g.,
       "example.net", then the Probe Description URI is
       "https://example.net/.well-known/probing.txt".  There should be
-      only one record.  Otherwise, the Probe Description File must exist
-      for all records and be the same;
+      only one reverse DNS record; otherwise, the Probe Description File
+      should also exist for all reverse DNS records and be identical;
 
    *  else (or in addition), the Probe Description URI is
       "https://[2001:db8:dead::1]/.well-known/probing.txt".
