@@ -157,33 +157,34 @@ As defined in {{iana}}, the Probe Description File must be made available at "/.
 - Expires
 - Preferred-Languages
 
-A new field "Description" should also be included to describe the measurement. To match the format defined in section 4 of {{!RFC9116}}, this field must be a one-line string.
+A new field "Description" should also be included to describe the measurement. To match the format defined in section 4 of {{!RFC9116}}, this field must be a one-line string with no line break.
 
 ### Example
 
-        # Canonical URI (if any)
-        Canonical: https://example.net/measurement.txt
+~~~
+# Canonical URI (if any)
+Canonical: https://example.net/measurement.txt
 
-        # Contact address
-        Contact: mailto:lab@example.net
+# Contact address
+Contact: mailto:lab@example.net
 
-        # Validity
-        Expires: 2023-12-31T18:37:07z
+# Validity
+Expires: 2023-12-31T18:37:07z
 
-        # Languages
-        Preferred-Languages: en, es, fr
+# Languages
+Preferred-Languages: en, es, fr
 
-        # Probes description
-        Description: This is a one-line string description of the
-        probes, with no line break.
+# Probes description
+Description: This is a one-line string description of the probes.
+~~~
 
 # Out-of-band Probe Attribution
 
 A possibility for probe attribution is to build a specific URI based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8:dead::1, the following URI is built:
 
-- if the reverse DNS record for 2001:db8:dead::1 exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt";
+- if the reverse DNS record for 2001:db8:dead::1 exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt". There should be only one record. Otherwise, the Probe Description File must exist for all records and be the same;
 
-- else (or in addition), the Probe Description URI is "https://\[2001:db8:dead::1\]/.well-known/probing.txt". If there is no certificate associated to this address (e.g., via {{?RFC8738}}), then there will be a certificate verification issue.
+- else (or in addition), the Probe Description URI is "https://\[2001:db8:dead::1\]/.well-known/probing.txt".
 
 The built URI must be a reference to the Probe Description File (see {{file}}).
 
@@ -197,9 +198,9 @@ Another possibility for probe attribution is to include a Probe Description URI 
 
 - For an ICMPv4 echo request {{!RFC792}}, include it in the data field;
 
-- For a UDP datagram {{!RFC768}}, include it in the data payload if its content has no structure;
+- For a UDP datagram {{!RFC768}}, include it in the data payload if there is no upper-layer protocol after the transport layer;
 
-- For a TCP segment {{!RFC9293}}, include it in the data payload if its content has no structure;
+- For a TCP segment {{!RFC9293}}, include it in the data payload if there is no upper-layer protocol after the transport layer;
 
 - For an IPv6 packet {{!RFC8200}}, include it in a PadN option either inside a Hop-by-Hop or Destination Options header.
 
@@ -229,11 +230,11 @@ But there are other considerations to be taken into account: from the payload co
 
 # Security Considerations {#security}
 
-It is expected that only researchers with good intentions will use these techniques, which will simplify and reduce the time to identify probes across the Internet.
+This document proposes simple techniques for probe attribution. It is expected that only ethical researchers would use them, which would simplify and reduce the time to identify probes across the Internet. In fact, these techniques could be used by anyone, malicious or not, which means that the information obtained cannot be blindly trusted. Using these techniques should not mean that a probe can be trusted. Instead, it should be considered as a solution for third parties to potentially understand the origin and context of such probes. This solution is not perfect but it provides a way for probe attribution, which is better than no solution at all.
 
-This information is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  Therefore, a malevolent actor could provide false information while conducting the probes, so that the action is attributed to a third party. In that case, not only would this third party be wrongly accused, but it might also be exposed to unwanted solicitations (e.g., angry emails or phone calls, if the malevolent actor used someone else's email address or phone number). As a consequence, the recipient of this information cannot trust it without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no probe attribution.
+The probe attribution is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  Therefore, a malevolent actor could provide false information while conducting the probes, or spoof them, so that the action is attributed to a third party. In that case, not only would this third party be wrongly accused, but it might also be exposed to unwanted solicitations (e.g., angry emails or phone calls, if the malevolent actor used someone else's email address or phone number). As a consequence, the recipient of this information cannot trust it without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no probe attribution. Note that using the probe attribution do not create a new DDoS vector since there is no expectation that third parties would automatically confirm the information obtained.
 
-As the Probe Description URI is transmitted in the clear and as the Probe Description File is publicly readable, Personally Identifiable Information (PII) should not be used for email address and phone number; a generic / group email address and phone number should be preferred.
+As the Probe Description URI is transmitted in the clear and as the Probe Description File is publicly readable, Personally Identifiable Information (PII) should not be used for email address and phone number; a generic / group email address and phone number should be preferred. Also, the Probe Description File could contain malicious data (e.g., links) and therefore should not be blindly trusted.
 
 # IANA Considerations {#iana}
 
@@ -270,33 +271,43 @@ Here are several examples generated by {{SCAPY}} and displayed in the 'tcpdump' 
 - IPv4 echo request with a URI in the data part if the ICMP ECHO_REQUEST
 
 ~~~
-IP6 2001:db8:dead::1 > 2001:db8:beef::1: DSTOPT 60878 > traceroute: Flags [S], seq 0, win 8192, length 0
-	0x0000:  6000 0000 0044 3c40 2001 0db8 dead 0000  `....D<@........
-	0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
-	0x0020:  0000 0000 0000 0001 0605 012c 6874 7470  ...........,http
-	0x0030:  733a 2f2f 6578 616d 706c 652e 6e65 742f  s://example.net/
-	0x0040:  2e77 656c 6c2d 6b6e 6f77 6e2f 7072 6f62  .well-known/prob
-	0x0050:  696e 672e 7478 7400 edce 829a 0000 0000  ing.txt.........
-	0x0060:  0000 0000 5002 2000 2668 0000            ....P...&h..
+IP6 2001:db8:dead::1 > 2001:db8:beef::1: DSTOPT 60878 > traceroute:
+Flags [S], seq 0, win 8192, length 0
 
-IP6 2001:db8:dead::1.15581 > 2001:db8:beef::1.traceroute: Flags [S], seq 0:23, win 8192, length 23
-	0x0000:  6000 0000 002b 0640 2001 0db8 dead 0000  `....+.@........
-	0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
-	0x0020:  0000 0000 0000 0001 3cdd 829a 0000 0000  ........<.......
-	0x0030:  0000 0000 5002 2000 c9b7 0000 6d61 696c  ....P.......mail
-	0x0040:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
-	0x0050:  6574 00                                  et.
+0x0000:  6000 0000 0044 3c40 2001 0db8 dead 0000  `....D<@........
+0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
+0x0020:  0000 0000 0000 0001 0605 012c 6874 7470  ...........,http
+0x0030:  733a 2f2f 6578 616d 706c 652e 6e65 742f  s://example.net/
+0x0040:  2e77 656c 6c2d 6b6e 6f77 6e2f 7072 6f62  .well-known/prob
+0x0050:  696e 672e 7478 7400 edce 829a 0000 0000  ing.txt.........
+0x0060:  0000 0000 5002 2000 2668 0000            ....P...&h..
 
-IP6 2001:db8:dead::1 > 2001:db8:beef::1: ICMP6, echo request, id 0, seq 0, length 28
-	0x0000:  6000 0000 001c 3a40 2001 0db8 dead 0000  `.....:@........
-	0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
-	0x0020:  0000 0000 0000 0001 8000 2996 0000 0000  ..........).....
-	0x0030:  7465 6c3a 2b31 2d32 3031 2d35 3535 2d30  tel:+1-201-555-0
-	0x0040:  3132 3300                                123.                          123.
 
-IP 192.0.2.1 > 198.51.100.1: ICMP echo request, id 0, seq 0, length 31
-	0x0000:  4500 0033 0001 0000 4001 8e93 c000 0201  E..3....@.......
-	0x0010:  c633 6401 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
-	0x0020:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
-	0x0030:  6574 00                                  et.
+IP6 2001:db8:dead::1.15581 > 2001:db8:beef::1.traceroute:
+Flags [S], seq 0:23, win 8192, length 23
+
+0x0000:  6000 0000 002b 0640 2001 0db8 dead 0000  `....+.@........
+0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
+0x0020:  0000 0000 0000 0001 3cdd 829a 0000 0000  ........<.......
+0x0030:  0000 0000 5002 2000 c9b7 0000 6d61 696c  ....P.......mail
+0x0040:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
+0x0050:  6574 00                                  et.
+
+
+IP6 2001:db8:dead::1 > 2001:db8:beef::1: ICMP6, echo request, id 0,
+seq 0, length 28
+
+0x0000:  6000 0000 001c 3a40 2001 0db8 dead 0000  `.....:@........
+0x0010:  0000 0000 0000 0001 2001 0db8 beef 0000  ................
+0x0020:  0000 0000 0000 0001 8000 2996 0000 0000  ..........).....
+0x0030:  7465 6c3a 2b31 2d32 3031 2d35 3535 2d30  tel:+1-201-555-0
+0x0040:  3132 3300                                123.
+
+
+IP 192.0.2.1 > 198.51.10.1: ICMP echo request, id 0, seq 0, length 31
+
+0x0000:  4500 0033 0001 0000 4001 8e93 c000 0201  E..3....@.......
+0x0010:  c633 6401 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
+0x0020:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
+0x0030:  6574 00                                  et.
 ~~~
