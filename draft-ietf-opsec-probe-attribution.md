@@ -182,7 +182,7 @@ Description: This is a one-line string description of the probes.
 
 A possibility for probe attribution is to build a specific URI based on the source address of the probe packet, following {{!RFC8615}}. For example, with a probe source address 2001:db8:dead::1, the following URI is built:
 
-- if the reverse DNS record for 2001:db8:dead::1 exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt". There should be only one record. Otherwise, the Probe Description File must exist for all records and be the same;
+- if the reverse DNS record for 2001:db8:dead::1 exists, e.g., "example.net", then the Probe Description URI is "https://example.net/.well-known/probing.txt". There should be only one reverse DNS record; otherwise, the Probe Description File should also exist for all reverse DNS records and be identical;
 
 - else (or in addition), the Probe Description URI is "https://\[2001:db8:dead::1\]/.well-known/probing.txt".
 
