@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-11T01:27:28.923836+00:00",
+  "timestamp": "2023-07-16T01:55:10.869379+00:00",
   "repo": "evyncke/opsec-probe-attribution",
   "labels": [
     {
@@ -111,15 +111,15 @@
       "id": "I_kwDOGyfVac5eD6FE",
       "title": "Use an identifier (magic number) ?",
       "url": "https://github.com/evyncke/opsec-probe-attribution/issues/6",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "IurmanJ",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Robert Story:\r\n\r\n> On the in-bound approach have you thought about putting some identifier in the packet so that wireshark/tcpdump could identify it? The fact networks could filter these out could be considered a feature, you can normally opt out of this sort of research problem.",
       "createdAt": "2023-02-09T15:14:14Z",
-      "updatedAt": "2023-02-27T11:50:16Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-14T12:43:08Z",
+      "closedAt": "2023-07-14T12:43:08Z",
       "comments": [
         {
           "author": "evyncke",
@@ -127,6 +127,13 @@
           "body": "As discussed, this could add complexity for little benefit.",
           "createdAt": "2023-02-27T11:50:16Z",
           "updatedAt": "2023-02-27T11:50:16Z"
+        },
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is discussed in the document.",
+          "createdAt": "2023-07-14T12:43:08Z",
+          "updatedAt": "2023-07-14T12:43:08Z"
         }
       ]
     },
@@ -135,15 +142,15 @@
       "id": "I_kwDOGyfVac5eFkHv",
       "title": "Ron Bonica's comment",
       "url": "https://github.com/evyncke/opsec-probe-attribution/issues/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "IurmanJ",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Ron: consequence could be that network operators filter packets containing the URI. The reason is simple: there is no/low benefit for them to participate in the probe experiment and also because there might be risks involved for them --> all of this may bias the results",
       "createdAt": "2023-02-09T20:10:28Z",
-      "updatedAt": "2023-02-27T11:49:48Z",
-      "closedAt": null,
+      "updatedAt": "2023-07-14T12:43:43Z",
+      "closedAt": "2023-07-14T12:43:42Z",
       "comments": [
         {
           "author": "evyncke",
@@ -151,6 +158,13 @@
           "body": "This is even a good thing as this in-band 'tag' could be used by SP.\r\n\r\nRather leave the text unchanged ?",
           "createdAt": "2023-02-27T11:49:48Z",
           "updatedAt": "2023-02-27T11:49:48Z"
+        },
+        {
+          "author": "IurmanJ",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This is discussed in the document.",
+          "createdAt": "2023-07-14T12:43:42Z",
+          "updatedAt": "2023-07-14T12:43:42Z"
         }
       ]
     }
@@ -568,6 +582,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOGyfVac5VhEeQ",
+      "title": "Martin's review + editorial changes",
+      "url": "https://github.com/evyncke/opsec-probe-attribution/pull/14",
+      "state": "OPEN",
+      "author": "IurmanJ",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Martin's review + editorial changes",
+      "createdAt": "2023-07-14T12:42:31Z",
+      "updatedAt": "2023-07-14T12:42:31Z",
+      "baseRepository": "evyncke/opsec-probe-attribution",
+      "baseRefName": "main",
+      "baseRefOid": "7bb90dbee5fabb12b3f107b557693c31ffa69b6c",
+      "headRepository": "IurmanJ/opsec-probe-attribution",
+      "headRefName": "main",
+      "headRefOid": "5bf29c11104690662c9885858fa1ca4499f895cf",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
