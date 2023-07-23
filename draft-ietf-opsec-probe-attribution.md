@@ -106,6 +106,16 @@ informative:
   SCAPY:
     title: Scapy
     target: https://scapy.net/
+  ANRW_PAPER:
+    title: Crisis, Ethics, Reliability & a measurement.network - Reflections on Active Network Measurements in Academia
+    target: https://pure.mpg.de/rest/items/item_3517635/component/file_3517636/content
+    date: 2023
+    seriesinfo:
+      DOI: 10.1145/3606464.3606483
+    author:
+      -
+        name: Tobias Fiebig
+        org: Max-Planck-Institut für Informatik
 
 --- abstract
 
@@ -192,7 +202,7 @@ As an example, the UK National Cyber Security Centre {{NCSC}} uses a similar att
 
 # In-band Probe Attribution
 
-Another possibility for probe attribution is to include a Probe Description URI in the probe itself:
+Another possibility for probe attribution is to include a Probe Description URI in the probe itself. Here is a non-exhaustive list of examples:
 
 - For an ICMPv6 echo request {{!RFC4443}}, include it in the data field;
 
@@ -222,7 +232,7 @@ Having both the out-of-band and in-band techniques combined also has a big advan
 
 # Ethical Considerations
 
-Executing measurement experiences over the global Internet obviously requires ethical consideration, especially when unsolicited transit/destination parties are involved.
+Executing measurement experiences over the global Internet obviously requires ethical consideration, which is discussed in {{ANRW_PAPER}}, especially when unsolicited transit or destination parties are involved.
 
 This document proposes a common way to identify the source and the purpose of active probing in order to reduce the potential burden on the unsolicited parties.
 
@@ -234,7 +244,7 @@ This document proposes simple techniques for probe attribution. It is expected t
 
 The probe attribution is provided to identify the source and intent of specific probes, but there is no authentication possible for the inline information.  Therefore, a malevolent actor could provide false information while conducting the probes, or spoof them, so that the action is attributed to a third party. In that case, not only would this third party be wrongly accused, but it might also be exposed to unwanted solicitations (e.g., angry emails or phone calls, if the malevolent actor used someone else's email address or phone number). As a consequence, the recipient of this information cannot trust it without confirmation.  If a recipient cannot confirm the information or does not wish to do so, it should treat the flows as if there were no probe attribution. Note that using the probe attribution do not create a new DDoS vector since there is no expectation that third parties would automatically confirm the information obtained.
 
-As the Probe Description URI is transmitted in the clear and as the Probe Description File is publicly readable, Personally Identifiable Information (PII) should not be used for email address and phone number; a generic / group email address and phone number should be preferred. Also, the Probe Description File could contain malicious data (e.g., links) and therefore should not be blindly trusted.
+As the Probe Description URI is transmitted in the clear and as the Probe Description File is publicly readable, Personally Identifiable Information (PII) should not be used for email address and phone number; a generic or group email address and phone number should be preferred. Also, the Probe Description File could contain malicious data (e.g., links) and therefore should not be blindly trusted.
 
 # IANA Considerations {#iana}
 
@@ -307,7 +317,7 @@ seq 0, length 28
 IP 192.0.2.1 > 198.51.10.1: ICMP echo request, id 0, seq 0, length 31
 
 0x0000:  4500 0033 0001 0000 4001 8e93 c000 0201  E..3....@.......
-0x0010:  c633 6401 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
+0x0010:  c633 0a01 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
 0x0020:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
 0x0030:  6574 00                                  et.
 ~~~
