@@ -5,9 +5,9 @@
 Operational Security Capabilities for IP Network InfrastructureE. Vyncke
 Internet-Draft                                                     Cisco
 Intended status: Informational                                 B. Donnet
-Expires: 11 January 2024                                       J. Iurman
+Expires: 24 January 2024                                       J. Iurman
                                                      Université de Liège
-                                                            10 July 2023
+                                                            23 July 2023
 
 
                      Attribution of Internet Probes
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 January 2024.
+   This Internet-Draft will expire on 24 January 2024.
 
 Copyright Notice
 
@@ -218,7 +218,8 @@ Table of Contents
 4.  In-band Probe Attribution
 
    Another possibility for probe attribution is to include a Probe
-   Description URI in the probe itself:
+   Description URI in the probe itself.  Here is a non-exhaustive list
+   of examples:
 
    *  For an ICMPv6 echo request [RFC4443], include it in the data
       field;
@@ -297,8 +298,9 @@ Table of Contents
 6.  Ethical Considerations
 
    Executing measurement experiences over the global Internet obviously
-   requires ethical consideration, especially when unsolicited transit/
-   destination parties are involved.
+   requires ethical consideration, which is discussed in [ANRW_PAPER],
+   especially when unsolicited transit or destination parties are
+   involved.
 
    This document proposes a common way to identify the source and the
    purpose of active probing in order to reduce the potential burden on
@@ -342,7 +344,7 @@ Table of Contents
    As the Probe Description URI is transmitted in the clear and as the
    Probe Description File is publicly readable, Personally Identifiable
    Information (PII) should not be used for email address and phone
-   number; a generic / group email address and phone number should be
+   number; a generic or group email address and phone number should be
    preferred.  Also, the Probe Description File could contain malicious
    data (e.g., links) and therefore should not be blindly trusted.
 
@@ -396,6 +398,14 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc9293>.
 
 9.2.  Informative References
+
+   [ANRW_PAPER]
+              Fiebig, T., "Crisis, Ethics, Reliability & a
+              measurement.network - Reflections on Active Network
+              Measurements in Academia", DOI 10.1145/3606464.3606483,
+              2023,
+              <https://pure.mpg.de/rest/items/item_3517635/component/
+              file_3517636/content>.
 
    [I-D.draft-vyncke-v6ops-james]
               Vyncke, E., Léas, R., and J. Iurman, "Just Another
@@ -509,7 +519,7 @@ Appendix B.  Examples of in-band Attribution
    IP 192.0.2.1 > 198.51.10.1: ICMP echo request, id 0, seq 0, length 31
 
    0x0000:  4500 0033 0001 0000 4001 8e93 c000 0201  E..3....@.......
-   0x0010:  c633 6401 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
+   0x0010:  c633 0a01 0800 ea74 0000 0000 6d61 696c  .3d....t....mail
    0x0020:  746f 3a6c 6162 4065 7861 6d70 6c65 2e6e  to:lab@example.n
    0x0030:  6574 00                                  et.
 

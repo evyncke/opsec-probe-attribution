@@ -5,9 +5,9 @@
 Operational Security Capabilities for IP Network InfrastructureE. Vyncke
 Internet-Draft                                                     Cisco
 Intended status: Informational                                 B. Donnet
-Expires: 11 January 2024                                       J. Iurman
+Expires: 24 January 2024                                       J. Iurman
                                                      Université de Liège
-                                                            10 July 2023
+                                                            23 July 2023
 
 
                      Attribution of Internet Probes
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 January 2024.
+   This Internet-Draft will expire on 24 January 2024.
 
 Copyright Notice
 
