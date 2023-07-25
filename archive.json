@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-07-16T01:55:10.869379+00:00",
+  "timestamp": "2023-07-25T01:36:14.791803+00:00",
   "repo": "evyncke/opsec-probe-attribution",
   "labels": [
     {
@@ -588,24 +588,26 @@
       "id": "PR_kwDOGyfVac5VhEeQ",
       "title": "Martin's review + editorial changes",
       "url": "https://github.com/evyncke/opsec-probe-attribution/pull/14",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "IurmanJ",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Martin's review + editorial changes",
       "createdAt": "2023-07-14T12:42:31Z",
-      "updatedAt": "2023-07-14T12:42:31Z",
+      "updatedAt": "2023-07-23T18:54:11Z",
       "baseRepository": "evyncke/opsec-probe-attribution",
       "baseRefName": "main",
       "baseRefOid": "7bb90dbee5fabb12b3f107b557693c31ffa69b6c",
       "headRepository": "IurmanJ/opsec-probe-attribution",
       "headRefName": "main",
       "headRefOid": "5bf29c11104690662c9885858fa1ca4499f895cf",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2023-07-23T18:54:11Z",
+      "mergedAt": "2023-07-23T18:54:11Z",
+      "mergedBy": "evyncke",
+      "mergeCommit": {
+        "oid": "a6fee9b0388b0f2df3739e24ad7bf7106932c008"
+      },
       "comments": [],
       "reviews": []
     }
